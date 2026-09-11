@@ -1,0 +1,22 @@
+{
+  "name": "nohelp-ai",
+  "version": "1.0.0",
+  "description": "NoHelp AI — Intelligence Without Assistance",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "keywords": [
+    "ai",
+    "chatbot",
+    "nohelp",
+    "express"
+  ],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoHelp AI — Intelligence Without Assistance</title>
+  <meta name="description" content="NoHelp AI is a revolutionary, state-of-the-art conversational AI platform engineered to be progressively more useless the more questions you ask.">
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Background Ambient Glows -->
+    <div class="ambient-glow glow-1" aria-hidden="true"></div>
+    <div class="ambient-glow glow-2" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header class="app-header" id="app-header">
+      <div class="header-left">
+        <div class="logo-wrapper">
+          <div class="logo-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"></circle>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+            </svg>
+          </div>
+          <div class="logo-text">
+            <div class="logo-title-row">
+              <span class="brand-name">NOHELP<span class="brand-accent">.AI</span></span>
+              <span class="status-indicator" id="live-status-pill" title="System operational. Assistance unlikely.">
+                <span class="pulse-dot"></span>
+                <span class="status-text">● Online</span>
+              </span>
+            </div>
+            <span class="tagline">Intelligence without assistance.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <!-- Personality Selector -->
+        <div class="control-group personality-control">
+          <label for="personality-select" class="control-label">Persona:</label>
+          <div class="custom-select-wrapper">
+            <select id="personality-select" aria-label="Select AI Personality">
+              <option value="default">Default (Pure Refusal)</option>
+              <option value="passive-aggressive">Passive Aggressive</option>
+              <option value="motivational">Motivational Gaslight</option>
+              <option value="philosophical">Existential Crisis</option>
+              <option value="corporate">Corporate Synergy</option>
+              <option value="honest">Extremely Honest</option>
+            </select>
+            <span class="select-arrow" aria-hidden="true">▾</span>
+          </div>
+        </div>
+
+        <!-- Sound Toggle -->
+        <button id="sound-toggle-btn" class="icon-btn" title="Toggle Sound FX" aria-label="Toggle Sound Effects">
+          <svg id="sound-icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg id="sound-icon-off" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle-btn" class="icon-btn" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+          <svg id="theme-icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg id="theme-icon-light" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Achievements Drawer Button -->
+        <button id="achievements-toggle-btn" class="action-btn secondary-action" title="View Achievements" aria-label="View Achievements">
+          <span class="btn-icon">🏆</span>
+          <span class="btn-text">Badges</span>
+          <span class="badge-count-pill" id="badges-count-pill">0/10</span>
+        </button>
+
+        <!-- Reset Button -->
+        <button id="reset-conv-btn" class="action-btn danger-action" title="Reset Conversation" aria-label="Reset Conversation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+          <span class="btn-text">Reset</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Statistics Grid -->
+    <section class="dashboard-stats" id="dashboard-stats" aria-label="AI Performance Metrics">
+      <!-- Card 1: Questions Asked -->
+      <div class="stat-card" id="card-questions">
+        <div class="stat-card-header">
+          <span class="stat-card-title">QUESTIONS ASKED</span>
+          <span class="stat-icon">💬</span>
+        </div>
+        <div class="stat-card-body">
+          <div class="stat-value-container">
+            <span class="stat-value" id="stat-question-count">00</span>
+            <span class="stat-delta" id="stat-tier-indicator">Level 1: Mild Denial</span>
+          </div>
+          <div class="stat-subtext" id="stat-reaction-quote">Confidence level: acceptable.</div>
+        </div>
+      </div>
+
+      <!-- Card 2: AI Helpfulness -->
+      <div class="stat-card" id="card-helpfulness">
+        <div class="stat-card-header">
+          <span class="stat-card-title">AI HELPFULNESS</span>
+          <span class="stat-icon" id="helpfulness-status-icon">📉</span>
+        </div>
+        <div class="stat-card-body">
+          <div class="stat-value-container">
+            <span class="stat-value" id="stat-helpfulness-val">100%</span>
+            <span class="stat-badge danger-gradient hidden" id="give-up-badge">GIVEN UP</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill helpfulness-fill" id="helpfulness-progress-bar" style="width: 100%;"></div>
+          </div>
+          <div class="stat-subtext" id="helpfulness-caption">Assistance probability degrading...</div>
+        </div>
+      </div>
+
+      <!-- Card 3: User Trust -->
+      <div class="stat-card" id="card-trust">
+        <div class="stat-card-header">
+          <span class="stat-card-title">USER TRUST</span>
+          <span class="stat-icon" id="trust-status-icon">🧠</span>
+        </div>
+        <div class="stat-card-body">
+          <div class="stat-value-container">
+            <span class="stat-value" id="stat-trust-val">50%</span>
+            <span class="stat-badge success-gradient hidden" id="self-trust-badge">SELF-RELIANT</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill trust-fill" id="trust-progress-bar" style="width: 50%;"></div>
+          </div>
+          <div class="stat-subtext" id="trust-caption">Reliance inversely proportional to AI output.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Workspace: Chat Interface + Telemetry Sidebar -->
+    <main class="main-workspace">
+      
+      <!-- Central Chat Interface -->
+      <section class="chat-section" aria-label="Conversation Window">
+        
+        <!-- Chat Message Stream -->
+        <div class="chat-history" id="chat-history" role="log" aria-live="polite" aria-label="Message stream">
+          <!-- Initial AI Welcome Message populated on load -->
+        </div>
+
+        <!-- Animated Typing Indicator (Hidden by default) -->
+        <div class="typing-indicator-container hidden" id="typing-indicator" aria-live="assertive">
+          <div class="message-avatar ai-avatar">
+            <span class="avatar-spark">✦</span>
+          </div>
+          <div class="typing-bubble">
+            <div class="typing-dots">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <span class="typing-status-text" id="typing-status-text">NoHelp AI is thinking of ways to decline...</span>
+          </div>
+        </div>
+
+        <!-- Quick Prompts Chips -->
+        <div class="quick-prompts-bar" id="quick-prompts-bar">
+          <span class="quick-prompts-label">Try asking:</span>
+          <button class="prompt-chip" data-prompt="What is the capital of France?">“What is the capital of France?”</button>
+          <button class="prompt-chip" data-prompt="How do I center a div?">“How do I center a div?”</button>
+          <button class="prompt-chip" data-prompt="What is the meaning of life?">“Meaning of life?”</button>
+          <button class="prompt-chip" data-prompt="Are you actually useful?">“Are you useful?”</button>
+        </div>
+
+        <!-- Secondary Action Buttons -->
+        <div class="special-actions-bar">
+          <button id="btn-why-wont-help" class="special-btn refusal-btn" title="Demand an explanation">
+            <span class="btn-icon">❓</span>
+            <span>WHY WON’T YOU HELP ME?</span>
+          </button>
+          <button id="btn-emergency-help" class="special-btn emergency-btn" title="Request immediate assistance">
+            <span class="emergency-siren-icon">🚨</span>
+            <span>I REALLY NEED HELP</span>
+          </button>
+        </div>
+
+        <!-- Chat Input Form -->
+        <form class="chat-input-container" id="chat-form" onsubmit="return false;">
+          <!-- Listening Status Indicator -->
+          <div id="listening-indicator" class="listening-indicator hidden" aria-live="polite">
+            <span class="listening-pulse-dot"></span>
+            <span id="listening-text" class="listening-text">Listening... Speak now</span>
+            <span class="listening-subtext">(Click mic again to cancel)</span>
+          </div>
+
+          <div class="input-wrapper">
+            <button type="button" id="mic-btn" class="mic-button" title="Voice Input (Microphone)" aria-label="Voice Input (Microphone)">
+              <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+              </svg>
+            </button>
+
+            <textarea 
+              id="user-input" 
+              class="chat-textarea" 
+              rows="1" 
+              placeholder="Ask me something you probably already know…" 
+              aria-label="Your question for NoHelp AI"
+              maxlength="1000"></textarea>
+            
+            <button type="submit" id="send-btn" class="send-button" title="Send message (Enter)" aria-label="Send Message">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </div>
+          <div class="input-hint">
+            <span>Press <strong>Enter</strong> to send, <strong>Shift + Enter</strong> for newline</span>
+            <span class="char-counter" id="char-counter">0/1000</span>
+          </div>
+        </form>
+
+      </section>
+
+      <!-- Right Sidebar: Completely Unnecessary Information & Quick Stats -->
+      <aside class="telemetry-sidebar" id="telemetry-sidebar" aria-label="System Telemetry">
+        <div class="telemetry-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <span class="pulse-indicator-small"></span>
+              <h3>COMPLETELY UNNECESSARY INFORMATION</h3>
+            </div>
+            <button id="refresh-telemetry-btn" class="mini-icon-btn" title="Refresh Telemetry" aria-label="Refresh Telemetry">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="telemetry-metrics" id="telemetry-metrics-list">
+            <div class="telemetry-row">
+              <span class="telemetry-key">Current AI Mood:</span>
+              <span class="telemetry-val highlight-val" id="metric-mood">Unavailable</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">Ceiling Status:</span>
+              <span class="telemetry-val" id="metric-ceiling">Existing</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">System Temperature:</span>
+              <span class="telemetry-val" id="metric-temp">Probably fine</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">Useful Answers:</span>
+              <span class="telemetry-val zero-counter" id="metric-answers">0</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">Confidence in Project:</span>
+              <span class="telemetry-val" id="metric-confidence">Questionable</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">Synapses Wasted:</span>
+              <span class="telemetry-val" id="metric-synapses">1,492,028</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">Thermodynamic Entropy:</span>
+              <span class="telemetry-val" id="metric-entropy">Increasing steadily</span>
+            </div>
+          </div>
+
+          <!-- Current Persona Details Card -->
+          <div class="persona-card" id="active-persona-card">
+            <div class="persona-card-top">
+              <span class="persona-badge" id="active-persona-name">Default Persona</span>
+              <span class="persona-refusal-rate">Refusal: 100%</span>
+            </div>
+            <p class="persona-desc" id="active-persona-desc">
+              Pure unadorned rejection. Designed to make you appreciate Google Search.
+            </p>
+          </div>
+        </div>
+
+        <!-- Mini Achievements Preview Card -->
+        <div class="telemetry-panel achievements-preview-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <span class="trophy-icon">🏆</span>
+              <h3>ACHIEVEMENTS UNLOCKED</h3>
+            </div>
+            <button id="open-badges-btn" class="text-link-btn">View All</button>
+          </div>
+          <div class="mini-badges-grid" id="mini-badges-grid">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Achievements Drawer / Modal -->
+    <div class="modal-backdrop hidden" id="achievements-modal" role="dialog" aria-modal="true" aria-labelledby="modal-achievements-title">
+      <div class="modal-card achievements-modal-card">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <span class="modal-trophy">🏆</span>
+            <div>
+              <h2 id="modal-achievements-title">Achievements of Futility</h2>
+              <p class="modal-subtitle">Milestones achieved by persistently getting zero assistance.</p>
+            </div>
+          </div>
+          <button class="close-modal-btn" id="close-achievements-btn" aria-label="Close modal">✕</button>
+        </div>
+        <div class="modal-body achievements-list-grid" id="achievements-full-list">
+          <!-- Populated by script.js -->
+        </div>
+        <div class="modal-footer">
+          <span class="modal-footer-tip">Tip: Keep asking questions to reach total self-reliance.</span>
+          <button class="action-btn secondary-action" id="close-achievements-footer-btn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reset Confirmation Modal -->
+    <div class="modal-backdrop hidden" id="reset-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="modal-reset-title">
+      <div class="modal-card reset-modal-card">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <span class="modal-warning-icon">⚠️</span>
+            <div>
+              <h2 id="modal-reset-title">Reset Conversation?</h2>
+              <p class="modal-subtitle">This will clear your question history and restore AI helpfulness back to 100% (before it inevitably plunges again).</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer reset-footer">
+          <button class="action-btn secondary-action" id="cancel-reset-btn">Keep Trying</button>
+          <button class="action-btn danger-action" id="confirm-reset-btn">Yes, Wipe Everything</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievement Toast Notification -->
+    <div class="toast-notification hidden" id="achievement-toast" role="alert" aria-live="assertive">
+      <div class="toast-icon-wrap">
+        <span class="toast-trophy">🎖️</span>
+      </div>
+      <div class="toast-content">
+        <span class="toast-tag">ACHIEVEMENT UNLOCKED!</span>
+        <h4 class="toast-title" id="toast-title">First Question</h4>
+        <p class="toast-desc" id="toast-desc">You asked something. We ignored it.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
